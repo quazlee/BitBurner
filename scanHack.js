@@ -54,7 +54,7 @@ export async function main(ns) {
             // ns.tprint(serverRam[0]);
             // ns.tprint(serverRam[1]);
             // ns.tprint(scriptRam);
-            if (threads > 0) {
+            if (threads > 0 && ns.getHackingLevel > ns.getServerRequiredHackingLevel(x)) {
                 ns.exec(script, target, threads, target);
             }
         }
