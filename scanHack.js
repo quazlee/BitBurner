@@ -6,7 +6,6 @@ export async function main(ns) {
     scanList = [];
     buildScanList(scanList, "home", "", ns)
     scanList.splice(0, 1);
-    ns.tprint(scanList);
 
     if (ns.fileExists('BruteSSH.exe')) {
         scanList.map(x => ns.brutessh(x));
@@ -33,29 +32,26 @@ export async function main(ns) {
         numPortsOpen++;
     }
 
+    let script = "serverHack.js";
 
     scanList.map(x => (ns.getServerNumPortsRequired(x) <= numPortsOpen) ? ns.nuke(x) : {});
     scanList.map(function(x) {
         if (ns.hasRootAccess(x)) {
             counter++;
              
-            let script = "simpleHack.js";
             let target = x;
 
-            if (!ns.fileExists(script, target)) {
-                ns.scp(script, "home", target);
-                ns.tprint("file copied");
-            }
-
+            ns.scp(script, "home", target);
+            
             let serverRam = ns.getServerRam(target);
             let scriptRam = ns.getScriptRam(script);
             let threads = (((serverRam[0] - serverRam[1])) / scriptRam) - 1;
 
-            // ns.tprint(serverRam[0]);
-            // ns.tprint(serverRam[1]);
-            // ns.tprint(scriptRam);
-            if (threads > 0 && ns.getHackingLevel > ns.getServerRequiredHackingLevel(x)) {
+            ns.tprint(threads);
+            
+            if (threads > 0 && ns.getHackingLevel() > ns.getServerRequiredHackingLevel(x)) {
                 ns.exec(script, target, threads, target);
+                ns.tprint("hola");
             }
         }
 
