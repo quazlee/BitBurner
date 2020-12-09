@@ -46,12 +46,9 @@ export async function main(ns) {
             let serverRam = ns.getServerRam(target);
             let scriptRam = ns.getScriptRam(script);
             let threads = (((serverRam[0] - serverRam[1])) / scriptRam) - 1;
-
-            ns.tprint(threads);
             
             if (threads > 0 && ns.getHackingLevel() > ns.getServerRequiredHackingLevel(x)) {
                 ns.exec(script, target, threads, target);
-                ns.tprint("hola");
             }
         }
 
