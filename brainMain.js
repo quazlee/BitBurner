@@ -6,18 +6,18 @@ export async function main(ns){
     var MONEY_MODIFIER = .5;
     scanList = getServers(scanList, "Server", ns);
 
-
-    if(((ns.getServerBaseSecurityLevel(target) - ns.getServerMinSecurityLevel(target)) * SECURITY_MODIFIER) + ns.getServerMinSecurityLevel(target)){
-        scanList.map(x => ns.killall(x));
-        serverWeaken();
-    } else if(ns.getServerMoneyAvailable(target) < ns.getServerMaxMoney(target) * MONEY_MODIFIER){
-        scanList.map(x => ns.killall(x));
-        serverGrow();
-    } else{
-        scanList.map(x => ns.killall(x));
-        serverHack();
+    while(true){
+        if(((ns.getServerBaseSecurityLevel(target) - ns.getServerMinSecurityLevel(target)) * SECURITY_MODIFIER) + ns.getServerMinSecurityLevel(target)){
+            scanList.map(x => ns.killall(x));
+            serverWeaken();
+        } else if(ns.getServerMoneyAvailable(target) < ns.getServerMaxMoney(target) * MONEY_MODIFIER){
+            scanList.map(x => ns.killall(x));
+            serverGrow();
+        } else{
+            scanList.map(x => ns.killall(x));
+            serverHack();
+        }
     }
-
     
 }
 
