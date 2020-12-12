@@ -1,5 +1,5 @@
 export async function main(ns){
-    var target;
+    var target = ns.args[0];
     var host;
     var scanList = ns.scan;
     var SECURITY_MODIFIER = .4;
