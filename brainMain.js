@@ -45,6 +45,7 @@ export async function main(ns){
                     ns.exec(script, scanList[i], serverSpace, target);
                 }
             }
+            await ns.sleep(1000);
         }
             
     }
