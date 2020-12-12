@@ -8,35 +8,52 @@ export async function main(ns){
 
     while(true){
         if(((ns.getServerBaseSecurityLevel(target) - ns.getServerMinSecurityLevel(target)) * SECURITY_MODIFIER) + ns.getServerMinSecurityLevel(target)){
+            for(let i = 0; 0 < scanList.length; i++){
+                ns.killall(scanList[i]);
+            }
             scanList.map(x => ns.killall(x));
             let script = "brainHack.js";
             let serverRam = ns.getServerRam(target);
             let scriptRam = ns.getScriptRam(script);
             let threads = (((serverRam[0] - serverRam[1])) / scriptRam) - 1;
-            scanlist.map(x => ns.exec(script, x, threads, target));
+            scanList.map(x => ns.exec(script, x, threads, target));
+            for(let i = 0; 0 < scanList.length; i++){
+                ns.exec(script, scanList[i], threads, target);
+            }
         } else if(ns.getServerMoneyAvailable(target) < ns.getServerMaxMoney(target) * MONEY_MODIFIER){
-            scanList.map(x => ns.killall(x));
+            for(let i = 0; 0 < scanList.length; i++){
+                ns.killall(scanList[i]);
+            }
             let script = "brainGrow.js";
             let serverRam = ns.getServerRam(target);
             let scriptRam = ns.getScriptRam(script);
             let threads = (((serverRam[0] - serverRam[1])) / scriptRam) - 1;
-            scanlist.map(x => ns.exec(script, x, threads, target));
+            for(let i = 0; 0 < scanList.length; i++){
+                ns.exec(script, scanList[i], threads, target);
+            }
         } else{
-            scanList.map(x => ns.killall(x));
+            for(let i = 0; 0 < scanList.length; i++){
+                ns.killall(scanList[i]);
+            }
             let script = "brainHack.js";
             let scriptRam = ns.getScriptRam(script);
             let threads = ns.hackAnalyzeThreads(target);
             let serverSpace = (((serverRam[0] - serverRam[1])) / scriptRam) - 1;
-            scanList.map(function(x){
+            for(let i = 0; 0 < scanList.length; i++){
                 if (serverSpace > threads){
-                    ns.exec(script, x, threads, target);
+                    ns.exec(script, scanList[i], threads, target);
                 }else{
-                    ns.exec(script, x, serverSpace, target);
+                    ns.exec(script, scanList[i], serverSpace, target);
                 }
-            })
-                }
+            }
+        }
+            
     }
     
+}
+
+for(let i = 0; 0 < scanList.length; i++){
+
 }
 
 // function serverGrow(target, host, ns){
