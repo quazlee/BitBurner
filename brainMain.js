@@ -8,7 +8,7 @@ export async function main(ns){
 
     while(true){
         if(((ns.getServerBaseSecurityLevel(target) - ns.getServerMinSecurityLevel(target)) * SECURITY_MODIFIER) + ns.getServerMinSecurityLevel(target)){
-            for(let i = 0; 0 < scanList.length; i++){
+            for(let i = 0; i < scanList.length; i++){
                 ns.killall(scanList[i]);
             }
 
@@ -16,29 +16,29 @@ export async function main(ns){
             let serverRam = ns.getServerRam(target);
             let scriptRam = ns.getScriptRam(script);
             let threads = (((serverRam[0] - serverRam[1])) / scriptRam) - 1;
-            for(let i = 0; 0 < scanList.length; i++){
+            for(let i = 0; i < scanList.length; i++){
                 ns.exec(script, scanList[i], threads, target);
             }
         } else if(ns.getServerMoneyAvailable(target) < ns.getServerMaxMoney(target) * MONEY_MODIFIER){
-            for(let i = 0; 0 < scanList.length; i++){
+            for(let i = 0; i < scanList.length; i++){
                 ns.killall(scanList[i]);
             }
             let script = "brainGrow.js";
             let serverRam = ns.getServerRam(target);
             let scriptRam = ns.getScriptRam(script);
             let threads = (((serverRam[0] - serverRam[1])) / scriptRam) - 1;
-            for(let i = 0; 0 < scanList.length; i++){
+            for(let i = 0; i < scanList.length; i++){
                 ns.exec(script, scanList[i], threads, target);
             }
         } else{
-            for(let i = 0; 0 < scanList.length; i++){
+            for(let i = 0; i < scanList.length; i++){
                 ns.killall(scanList[i]);
             }
             let script = "brainHack.js";
             let scriptRam = ns.getScriptRam(script);
             let threads = ns.hackAnalyzeThreads(target);
             let serverSpace = (((serverRam[0] - serverRam[1])) / scriptRam) - 1;
-            for(let i = 0; 0 < scanList.length; i++){
+            for(let i = 0; i < scanList.length; i++){
                 if (serverSpace > threads){
                     ns.exec(script, scanList[i], threads, target);
                 }else{
