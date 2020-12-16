@@ -1,7 +1,6 @@
 let allServers = ["home","foodnstuff","sigma-cosmetics","CSEC","joesguns","hong-fang-tea","zer0","omega-net","netlink","nectar-net","neo-net","silver-helix","rothman-uni","lexo-corp","unitalife","zb-institute","phantasy","the-hub","summit-uni","avmnite-02h","alpha-ent","global-pharm","omnia","univ-energy","run4theh111z","vitalife","microdyne","fulcrumtech","aevum-police","catalyst","rho-construction","I.I.I.I","millenium-fitness","solaris","titan-labs","helios","omnitek","powerhouse-fitness","blade",".","harakiri-sushi","iron-gym","max-hardware"]
 
 export async function main(ns) {
-    ns.tail();
     
     const SECURITY_PERCENT = 0.05; //The percent of a server's security (btwn min + base) the target has to be above to weaken
     const WEAKEN_AMOUNT = 0.05; //Amount of security that weaken lowers by (this should stay constant)
@@ -105,7 +104,12 @@ function getAvailableThreads(scriptRam, ns) {
     let threads = 0;
     for (let i = 0; i < allServers.length; ++i) {
         let serverRam = ns.getServerRam(allServers[i]);
+        if (allServers[i] == "home") {
+            serverRam[1] += 50;
+            if (serverRam[1] > serverRam[0]) serverRam[1] = serverRam[0]
+        }
         threads += Math.floor((serverRam[0] - serverRam[1]) / scriptRam);
+        
     }
     return threads;
 }
@@ -148,6 +152,10 @@ function deploy(scriptObject, threadsObject, performThreads, target,  ns){
         for (let i = 0; i < allServers.length; i++) {
 
             let serverSize = ns.getServerRam(allServers[i])
+            if (allServers[i] == "home") {
+                serverSize[1] += 50;
+                if (serverSize[1] > serverSize[0]) serverSize[1] = serverSize[0]
+            }
             let tempThreads = Math.floor(((serverSize[0] - serverSize[1])) / scriptObject.size);
 
             if (tempThreads == 0) continue;
@@ -164,5 +172,5 @@ function deploy(scriptObject, threadsObject, performThreads, target,  ns){
     setTimeout( function() {
         threadsObject.totalThreads += reclaimThreads; 
         threadsObject[scriptObject.threadsName] -= reclaimThreads;
-    }, scriptObject.execTime);
+    }, (scriptObject.execTime*1000)+10);
 }
